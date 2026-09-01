@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Make a Wish </title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        height: 100vh;
+        overflow: hidden;
+        font-family: Georgia, "Times New Roman", serif;
+        background: #fff;
+        cursor: pointer;
+    }
+
+    .screen {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* FIRST SCREEN */
+    #firstScreen {
+        background: #fff;
+    }
+
+    .instruction {
+        position: absolute;
+        top: 18%;
+        font-size: 17px;
+        color: #777;
+        letter-spacing: 1px;
+    }
+
+    .heart {
+        width: 105px;
+        height: 105px;
+        background: linear-gradient(145deg, #ff4d91, #d90055);
+        transform: rotate(-45deg);
+        position: relative;
+        filter: drop-shadow(0 10px 20px rgba(220, 0, 80, .25));
+        animation: heartbeat 1.5s infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+        content: "";
+        width: 105px;
+        height: 105px;
+        background: inherit;
+        border-radius: 50%;
+        position: absolute;
+    }
+
+    .heart::before {
+        top: -52px;
+        left: 0;
+    }
+
+    .heart::after {
+        left: 52px;
+        top: 0;
+    }
+
+    .heart-text {
+        position: absolute;
+        z-index: 5;
+        color: white;
+        font-size: 30px;
+        transform: rotate(45deg);
+        left: 37px;
+        top: 37px;
+        pointer-events: none;
+    }
+
+    @keyframes heartbeat {
+        0%, 100% { transform: rotate(-45deg) scale(1); }
+        50% { transform: rotate(-45deg) scale(1.08); }
+    }
+
+    .click-text {
+        position: absolute;
+        bottom: 20%;
+        color: #999;
+        font-size: 14px;
+    }
+
+    /* SECOND SCREEN */
+    #birthdayScreen {
+        display: none;
+        background: linear-gradient(135deg, #e91e63, #b40045);
+        color: white;
+        text-align: center;
+    }
+
+    .content {
+        position: relative;
+        z-index: 5;
+        animation: appear 1.5s ease forwards;
+    }
+
+    .small-text {
+        font-size: 18px;
+        letter-spacing: 2px;
+        margin-bottom: 12px;
+        opacity: .9;
+        font-style: italic;
+    }
+
+    .happy {
+        font-size: clamp(70px, 15vw, 150px);
+        font-weight: bold;
+        line-height: .9;
+        text-shadow: 4px 5px 0 rgba(0,0,0,.12);
+    }
+
+    .birthday {
+        font-size: clamp(50px, 12vw, 120px);
+        font-weight: bold;
+        margin-top: 15px;
+        animation: slideUp 1.2s ease forwards;
+    }
+
+    .name {
+        font-family: cursive;
+        font-size: clamp(35px, 7vw, 70px);
+        margin-top: 25px;
+        opacity: 0;
+        animation: fadeName 2s ease 1.3s forwards;
+    }
+
+    .message {
+        margin-top: 30px;
+        font-family: Arial, sans-serif;
+        font-size: 17px;
+        opacity: 0;
+        animation: fadeName 2s ease 2s forwards;
+    }
+
+    @keyframes appear {
+        from {
+            opacity: 0;
+            transform: scale(.7);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(80px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeName {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* FLOATING HEARTS */
+    .floating-heart {
+        position: absolute;
+        color: rgba(255,255,255,.7);
+        font-size: 25px;
+        animation: floatUp linear forwards;
+        bottom: -50px;
+    }
+
+    @keyframes floatUp {
+        from {
+            transform: translateY(0) rotate(0deg);
+            opacity: 0;
+        }
+        20% {
+            opacity: 1;
+        }
+        to {
+            transform: translateY(-110vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+        .instruction {
+            top: 15%;
+            font-size: 14px;
+        }
+
+        .click-text {
+            bottom: 18%;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- FIRST SCREEN -->
+<div class="screen" id="firstScreen">
+
+    <div class="heart" onclick="openBirthday()">
+        <div class="heart-text">♥</div>
+    </div>
+
+    <div class="click-text">
+        Tap the heart 💗
+    </div>
+
+</div>
+
+
+<!-- BIRTHDAY SCREEN -->
+<div class="screen" id="birthdayScreen">
+
+    <div class="content">
+
+        <div class="happy">
+            Happy
+        </div>
+
+        <div class="birthday">
+            Birthday
+        </div>
+
+        <div class="name">
+            Gowtham Bro💗
+        </div>
+
+        <div class="message">
+            Wishing you lots of happiness, love & beautiful moments ✨
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function openBirthday() {
+
+    // Hide first screen
+    document.getElementById("firstScreen").style.display = "none";
+
+    // Show birthday screen
+    document.getElementById("birthdayScreen").style.display = "flex";
+
+    // Start floating hearts
+    setInterval(createHeart, 350);
+
+}
+
+
+// Create floating hearts
+function createHeart() {
+
+    const heart = document.createElement("div");
+
+    heart.className = "floating-heart";
+    heart.innerHTML = "♥";
+
+    heart.style.left = Math.random() * 100 + "%";
+
+    heart.style.fontSize =
+        (15 + Math.random() * 35) + "px";
+
+    heart.style.animationDuration =
+        (4 + Math.random() * 5) + "s";
+
+    document.getElementById("birthdayScreen")
+        .appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 9000);
+}
+
+</script>
+
+</body>
+</html>
