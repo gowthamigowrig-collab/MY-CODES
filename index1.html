@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Bestie! ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff758c, #ff7eb3, #7afcff);
+            background-size: 400% 400%;
+            animation: gradientBG 8s ease infinite;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            color: #fff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Initial Screen Style */
+        .start-container {
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .tap-heart {
+            font-size: 6rem;
+            animation: beat 0.8s infinite alternate;
+            display: inline-block;
+            cursor: pointer;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+            transition: transform 0.2s;
+        }
+
+        .tap-heart:active {
+            transform: scale(0.9);
+        }
+
+        .tap-text {
+            margin-top: 15px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Wishes Card Style */
+        .card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            max-width: 500px;
+            width: 90%;
+            z-index: 10;
+            display: none; /* Hidden by default */
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        @keyframes beat {
+            to { transform: scale(1.2); }
+        }
+
+        /* Floating Hearts Animation */
+        .floating-heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 20px;
+            animation: float 6s linear infinite;
+            bottom: -50px;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tap Screen -->
+    <div class="start-container" id="startBtn" onclick="openWish()">
+        <div class="tap-heart">❤️</div>
+        <div class="tap-text">Tap the Heart! 🎁</div>
+    </div>
+
+    <!-- Birthday Wish Page -->
+    <div class="card" id="wishCard">
+        <div class="tap-heart" style="animation: beat 1s infinite alternate; font-size: 4rem;">💖</div>
+        <h1>Happy Birthday  My Bestie! 🎉</h1>
+        <p>LOVE YOU MY DEAR USHA</p>
+        <p>Wishing you a year filled with love, laughter, and endless happiness!Have a wonderful day ahead!</p>
+        <div style="font-size: 2rem;">🎂✨🥳</div>
+    </div>
+
+    <!-- Floating hearts script -->
+    <script>
+        function openWish() {
+            document.getElementById('startBtn').style.display = 'none';
+            document.getElementById('wishCard').style.display = 'block';
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerText = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>
